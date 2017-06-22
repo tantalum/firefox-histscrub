@@ -13,15 +13,22 @@
     "128": "brush-128.png"
   },
 
-  "permission": [
+  "permissions": [
     "bookmarks",
     "browsingData",
     "cookies",
-    "history"
+    "history",
+    "tabs"
   ],
 
   "browser_action": {
-    "default_icon": "brush-32.png",
+    "browser_style": true,
+    "default_icon": {
+      "32":  "brush-32.png",
+      "48":  "brush-48.png",
+      "64":  "brush-64.png",
+      "128": "brush-128.png"
+    },
     "default_title": "History Scrubber",
     "default_popup": "popup/histscrub.html"
   }
