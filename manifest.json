@@ -7,10 +7,9 @@
   "homepage_url": "https://blog.circuitsofimagination.com",
 
   "icons": {
-    "32":  "icons/brush-32.png",
-    "48":  "icons/brush-48.png",
-    "64":  "icons/brush-64.png",
-    "128": "icons/bursh-128.png"
+    "32":  "brush-32.png",
+    "48":  "brush-48.png",
+    "64":  "brush-64.png"
   },
 
   "permission": [
@@ -21,7 +20,7 @@
   ],
 
   "browser_action": {
-    "default_icon": "icons/brush-32.png",
+    "default_icon": "brush-32.png",
     "default_title": "History Scrubber",
     "default_popup": "popup/histscrub.html"
   }
