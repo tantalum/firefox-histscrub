@@ -14,9 +14,8 @@
   },
 
   "permissions": [
-    "bookmarks",
-    "browsingData",
     "cookies",
+    "<all_urls>",
     "history",
     "tabs"
   ],

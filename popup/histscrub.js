@@ -29,31 +29,46 @@ function onHistoryRetrieved(historyItems) {
   console.log("Found: "+historySize+" items");
 
   //Initialize progress bar
-  scrubProgress.setAttribute("max", historySize);
-  scrubProgress.setAttribute("value", 0);
+  scrubProgress.setAttribute("value", 1);
 
   let numScrubbed = 0;
-  historyItems.forEach(function (histItem, index) {
-    //Assuming forEach executes items sequentially and in orderer
-    scrubProgress.setAttribute("value", index);
-    
-    //Scrub the item if the last time it was accessed was more then one month ago
-    // Or if has been visited only once and over a week ago
-    if(histItem.lastVisitTime < oneMonthAgo
-       || (histItem.lastVisitTime < oneWeekAgo && histItem.visitCount < 2)
-    ) {
-      scrubItem(histItem);
-      numScrubbed += 1;
-    }
+  let scrubPromises = historyItems.map(function (histItem) {
+    return new Promise(function (resolve, reject) {
+      //Scrub the item if the last time it was accessed was more then one month ago
+      // Or if has been visited only once and over a week ago
+      if(histItem.lastVisitTime < oneMonthAgo
+         || (histItem.lastVisitTime < oneWeekAgo && histItem.visitCount < 2)
+      ) {
+        scrubItem(histItem).then(resolve, reject);
+        numScrubbed += 1;
+      } else {
+        resolve();
+      }
+    });
   });
 
   //TODO: Notify to re-run if historySize == HISTSCRUB_MAX_RESULTS
-
-  scrubProgress.setAttribute("value", 0);
-  console.log("Done scrubbing");
-  console.log("Scrubbed "+numScrubbed+" of "+ historySize+" items");
+  Promise.all(scrubPromises).then(function () {
+    scrubProgress.setAttribute("value", 0);
+    alert("Done scrubbing");
+    console.log("Scrubbed "+numScrubbed+" of "+ historySize+" items");
+  }).catch(function (reson) {
+    scrubProgress.setAttribute("value", 0);
+    console.log("Failed to scrub history");
+    console.dir(reason);
+  })
 }
 
 function scrubItem(histItem) {
   console.log("Scrbbing: "+histItem.url);
+  return browser.cookies.getAll({url: histItem.url}).then(function (cookies) {
+    return Promise.all(cookies.map(function (cookie) {
+      return browser.cookies.remove({
+        url: histItem.url,
+        name: cookie.name
+      })
+    }));
+  }).then(function () {
+    return browser.history.deleteUrl({url: histItem.url });
+  });
 }
