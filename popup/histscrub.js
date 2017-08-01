@@ -1,4 +1,4 @@
-const HISTSCRUB_MAX_RESULTS=100000;
+const HISTSCRUB_MAX_RESULTS=1000;
 
 let scrubButton = document.getElementById("scrub-button");
 let scrubProgress =  document.getElementById("scrub-progress");
