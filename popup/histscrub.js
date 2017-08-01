@@ -61,14 +61,5 @@ function onHistoryRetrieved(historyItems) {
 
 function scrubItem(histItem) {
   console.log("Scrbbing: "+histItem.url);
-  return browser.cookies.getAll({url: histItem.url}).then(function (cookies) {
-    return Promise.all(cookies.map(function (cookie) {
-      return browser.cookies.remove({
-        url: histItem.url,
-        name: cookie.name
-      })
-    }));
-  }).then(function () {
-    return browser.history.deleteUrl({url: histItem.url });
-  });
+  return browser.history.deleteUrl({url: histItem.url });
 }
