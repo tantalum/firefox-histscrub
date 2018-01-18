@@ -1,0 +1,21 @@
+#scrub-progress-container {
+  margin: 0.5em;
+}
+
+#scrub-button-container {
+  margin: 0.5em;
+  text-align: right;
+}
+
+#scrub-button {
+  background: #fff;
+  border: 2px solid #9b9b9b;
+  color: #4c4c4c;
+}
+
+#scrub-button:hover {
+  background: #bbb;
+  border: 2px solid #9b9b9b;
+  color: #4b4b4b;
+}
+

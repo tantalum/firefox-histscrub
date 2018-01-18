@@ -30,6 +30,7 @@ function onHistoryRetrieved(historyItems) {
 
   //Initialize progress bar
   scrubProgress.setAttribute("value", 1);
+  scrubProgress.setAttribute("max", historyItems.length);
 
   let numScrubbed = 0;
   let scrubPromises = historyItems.map(function (histItem) {
@@ -41,6 +42,7 @@ function onHistoryRetrieved(historyItems) {
       ) {
         scrubItem(histItem).then(resolve, reject);
         numScrubbed += 1;
+        scrubProgress.setAttribute("value", numScrubbed);
       } else {
         resolve();
       }
